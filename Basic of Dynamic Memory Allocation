@@ -1,0 +1,103 @@
+
+1.Static Memory Allocation
+
+Memory allocated during compile time is called static memory.
+The memory allocated is fixed and cannot be increased or decreased during run ime.
+
+
+2.Dynamic memory allocation
+
+The process of allocating memory at the time of execution is called dynamic memory allocation.
+Heap is the segment of memory where dynamic memory allocation takes place
+
+Unlike stack where memory is allocated or deallocated in a defined order.heap is an area of memory 
+where memory is allocated or deallocated without any order or randomly.
+
+There are certain built-in function that can help in allocating or deallocating some memory space at run time.
+
+Notes: Pointers play an important role in dynamic memory allocation.
+Allocated memory can only be accessed through pointers.
+
+Built in functions:
+1) malloc()
+2) calloc()
+3) realloc()
+4) free()
+
+
+1) What is malloc()?
+-> malloc is a built-in-function declared in the header file <stdlib.h>
+
+-> malloc is the short name for "memory allocation" and is used to dynamically allocate a single large block of contiguos memory according to the size specified.
+
+-> Syntax (void*)malloc(size_t size)
+
+-> malloc function simply allocates a memory block according to the size specified in the heap and on success it returns a pointer pointing to the first byte of the allocated memory else return NULL.
+
+-> size_t is defined in <stdlib.h> as unsigned int.
+
+
+# Why mallloc return void pointer?
+
+- malloc doesn't have an idea of what it is pointing to.
+- it nerely allocates memory requested by the user without knowing the types of data to be stored inside the memory.
+:- The void pointer can be typecasted to an appropriate type.
+ -> int *ptr = (int*)malloc(4);
+ - malloc allocates 4 bytes of memory in the heap and the address of the first byte is stored in the pointer ptr.
+ 
+ 
+2) What is calloc()?
+
+-> calloc() function is used to dynamically allocate multiple blocks of memory.
+
+# it is diffrent from malloc in two ways:
+
+#diffrence-1
+
+  * calloc() needs two arguments instead of just one.
+   Syntax:- void *calloc(size_t n, size_t size);
+          * n = Number of blocks , size = size of each block
+    
+ Example: int *ptr = (int *)calloc(10, sizeof(int));
+      An equivalent malloc call:
+          int *ptr = (int *)malloc(10*sizeof(int));
+          
+ #diffrence-2
+ -> Memory allocated by calloc is initialized to zero.
+ (it is not the case with malloc. Memory allocated by malloc is initialized with some garbage value.)
+ 
+ Note : malloc and calloc both return NULL when sufficient memory is not avaiable in the heap.
+ = calloc stands for clear allocation && malloc stands for memroy allocation
+ 
+  
+  
+  3) What is REALLOC()?
+  
+  -> realloc() function is used to change the size of the memory block without losing the old data.
+  Syntax: void *realloc(void *ptr, size_t, newSize)
+       *ptr-> pointer to the previously allocated memory, newSize = Newsize
+  
+  Example : int *ptr = (int *)malloc(sizeof(int));
+  ptr = (int *)realloc(ptr, 2*sizeof(int));
+      - This will allocate memory space of 2*sizeof(int).
+      - Also, this function moves the contents of the old block to a new block and the data of the old block is not lost.
+      - We may lose the data when the new size is smaller than the old size.
+      - Newly allocated bytes are uninitialized.
+   
+
+4) Releasing the dynamically allocated memory using free()
+
+-> free() function is used to release the dynamically allocated memory in heap.
+-> Syntax: void free(ptr)
+-> the memory allocated in heap will not be released automatically after using the memory. The space remains there and can't be used.
+-> it is the programmer's responsibility to release the memory after use.
+
+Example:
+  int main()
+  {
+    int *ptr = (int *)malloc(4*sizeof(int));
+    ....
+    free(ptr);
+    }
+    
+   
